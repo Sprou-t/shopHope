@@ -1,5 +1,5 @@
 {
-  "name": "SHOPHOPE",
+  "name": "shophope",
   "version": "1.0.0",
   "type": "module",
   "main": "webpack.config.js",
