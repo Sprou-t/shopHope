@@ -20,6 +20,7 @@ const config = (env, argv) => {
       static: path.resolve('dist'), // Dev server static files path
       compress: true,
       port: 3000, // Port for dev server
+      historyApiFallback: true,
     },
     devtool: 'source-map', // Source maps for debugging
     module: {
