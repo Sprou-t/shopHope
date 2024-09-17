@@ -1,38 +1,22 @@
 import React, { useState, useEffect } from 'react'
 import './index.css'
 import axios from 'axios'
-
-const useNotes = (url) => {
-  const [notes, setNotes] = useState([])
-  useEffect(() => {
-    axios.get(url).then(response => {
-      setNotes(response.data)
-    })
-  }, [url])
-  return notes
-}
+import { Box } from '@chakra-ui/react'
+import { Route, Routes } from 'react-router-dom'
+import CreatePage from './pages/CreatePage.jsx'
+import HomePage from './pages/HomePage.jsx'
+import Navbar from './components/Navbar.jsx'
+import { p } from 'framer-motion/client'
 
 const App = () => {
-    const [counter, setCounter] = useState(0)
-  
-    const [values, setValues] = useState([])
-    const notes = useNotes(BACKEND_URL)
-  
-  
-    const handleClick = () => {
-      setCounter(counter + 1)
-      setValues(values.concat(counter))
-    }
-  
-    return (
-      <div className="container">
-        hello webpack {counter} clicks
-  
-        <button onClick={handleClick}>
-          press
-        </button>
-        <div>{notes.length} notes on server {BACKEND_URL}</div>
-      </div>
+    return ( 
+      <Box minH='100vh'>
+        <Navbar/>
+        <Routes>
+          <Route path = '/' element = {<HomePage />} />
+          <Route path = '/create' element = {<CreatePage />} />
+        </Routes>
+      </Box>
     )
   }
 
