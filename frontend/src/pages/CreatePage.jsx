@@ -8,6 +8,7 @@ import {
   Button
 } from "@chakra-ui/react";
 import React, { useState } from "react";
+import { useProductStore } from "../../store/product";
 
 // container.sm adjusts the maximum width of the container, typically to a small size relative to different screen sizes
 export default function CreatePage() {
@@ -16,9 +17,11 @@ export default function CreatePage() {
     price: "",
     image: "",
   });
-
-  const handleAddProrduct = () => {
-    console.log(newProduct);
+  const {createProduct} = useProductStore()
+  const handleAddProrduct = async() => {
+    const {success, message} = await createProduct(newProduct)
+    console.log("Success:", success)
+    console.log("Message:", message)
   };
   return (
     <Container maxW={"container.sm"}>

@@ -3,6 +3,7 @@ import express from "express"; //"server": "json-server --watch db.json --port 3
 import dotenv from "dotenv";
 import { connectDB } from "./db.js";
 import productRoutes from "./routes/product.route.js";
+import cors from 'cors';
 
 dotenv.config(); // looks for .env file in root directory by default
 
@@ -10,7 +11,7 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 app.use(express.json()); // a middleware that allows app to accept data in req.body
-
+app.use(cors());
 app.use("/products", productRoutes);
 
 app.listen(PORT, () => {
