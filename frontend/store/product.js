@@ -1,10 +1,9 @@
 import {create} from "zustand"
 
-const apiUrl = BACKEND_URL;
-// create a state management store
+// create a state management store that can set the state, send POST req to create new data
 // set is a function provided by zustand to update the state of the store.
 export const useProductStore = create((set) =>({
-    products: [],
+    products: [], // Initial state: an empty array of products
     // setProducts is a method that can take in an arg to execute the function
     setProducts: (products) => set({ products}),
     createProduct: async(newProduct) => {
@@ -18,6 +17,7 @@ export const useProductStore = create((set) =>({
             },
             body:JSON.stringify(newProduct)
         });
+        // res is the response obj returned from the fetch call
         const data = await res.json();
         set((state) => ({
             products: [...state.products, data.data], // Correctly add the new product to the array
