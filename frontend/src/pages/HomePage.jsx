@@ -1,8 +1,10 @@
 import { Container, VStack, Text, SimpleGrid } from '@chakra-ui/react'
 import { Link } from 'react-router-dom'
 import React from 'react'
+import ProductCard from '../components/ProductCard.jsx'
 
 const HomePage = () => {
+  
   return (
     <Container maxW={'container.x1'} py={12}>
       <VStack spacing={8}>
@@ -24,7 +26,7 @@ const HomePage = () => {
           spacing={10}
           w = "full"
         >
-
+					
         </SimpleGrid>
 
         <Text fontSize='xl' textAlign={"center"} fontWeight='bold' color='gray.500'>

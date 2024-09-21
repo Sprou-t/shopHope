@@ -22,6 +22,9 @@ const config = (env, argv) => {
       path: path.resolve("dist"), // Output path
       filename: "bundle.js", // Bundle name
     },
+    resolve: {
+      extensions: ['.js', '.jsx', '.json'], // Automatically resolve these extensions
+    },
     devServer: {
       static: path.resolve("dist"), // Dev server static files path
       compress: true,
