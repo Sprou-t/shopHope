@@ -6,12 +6,14 @@ import {
   createProduct,
   updateProduct,
   deleteProduct,
+  getUrlImage,
 } from "../controllers/product.controller.js";
 
 const router = express.Router();
 
 router.get("/", getProducts);
 router.post("/", createProduct);
+router.post("/load-url-images", getUrlImage);
 router.put("/:id", updateProduct);
 router.delete("/:id", deleteProduct);
 

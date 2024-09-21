@@ -27,7 +27,27 @@ export const useProductStore = create((set) =>({
     fetchProducts: async () => {
 		const res = await fetch("http://localhost:5000/products");
 		const data = await res.json();
-		set({ products: data.data });
+        
+        // Extract image URLs from products
+        const imageUrls = data.data.map(product => product.image);
+        // Fetch images and convert them to base64 strings
+        const imageResponse = await fetch('http://localhost:5000/products/load-url-images', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ images: imageUrls })
+        });
+        
+        const imageData = await imageResponse.json();
+        
+        // Update the products with base64 images
+        const productsWithBase64Images = data.data.map((product, index) => ({
+            ...product,
+            image: imageData.images[index] // Replace the URL with the base64 string
+        }));
+        
+        set({ products: productsWithBase64Images });
 	},
 }
 ))

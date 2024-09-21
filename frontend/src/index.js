@@ -17,11 +17,11 @@ if (!window.Promise) {
 const el = document.getElementById("app");
 
 ReactDOM.createRoot(el).render(
-  <React.StrictMode>
+
     <BrowserRouter>
       <ChakraProvider>
         <App />
       </ChakraProvider>
     </BrowserRouter>
-  </React.StrictMode>
+
 );

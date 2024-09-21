@@ -10,20 +10,21 @@ const config = (env, argv) => {
   console.log("argv", argv.mode);
 
   // Define the backend URL based on the mode(production)
- // Define the backend URL based on the mode(production)
- const backend_url =
- argv.mode === "production"
-   ? "https://notes-backend-black-darkness-8420.fly.dev/" // Production URL
-   :  "http://localhost:5000"; // Development URL from .env file
+  // Define the backend URL based on the mode(production)
+  const backend_url =
+    argv.mode === "production"
+      ? "https://notes-backend-black-darkness-8420.fly.dev/" // Production URL
+      : "http://localhost:5000"; // Development URL from .env file
 
   return {
     entry: "./frontend/src/index.js", // Entry point
     output: {
       path: path.resolve("dist"), // Output path
       filename: "bundle.js", // Bundle name
+      assetModuleFilename: 'images/[hash][ext][query]'
     },
     resolve: {
-      extensions: ['.js', '.jsx', '.json'], // Automatically resolve these extensions
+      extensions: [".js", ".jsx", ".json"], // Automatically resolve these extensions
     },
     devServer: {
       static: path.resolve("dist"), // Dev server static files path
@@ -49,11 +50,12 @@ const config = (env, argv) => {
           use: ["style-loader", "css-loader", "sass-loader"],
         },
         {
-          test: /\.(png|woff|woff2|eot|ttf|svg)$/, // Load images and fonts
-          use: {
-            loader: "url-loader",
-            options: { limit: false }, // No size limit for files
-          },
+          test: /\.(png|jpg|jpeg|gif|svg)$/,
+          type: 'asset/resource',
+        },
+        {
+          test: /\.(woff|woff2|eot|ttf|otf)$/,
+          type: 'asset/resource',
         },
       ],
     },

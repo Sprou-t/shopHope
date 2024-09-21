@@ -1,10 +1,27 @@
-import { Container, VStack, Text, SimpleGrid } from '@chakra-ui/react'
+import { Container, VStack, Text, SimpleGrid,Image } from '@chakra-ui/react'
 import { Link } from 'react-router-dom'
 import React from 'react'
 import ProductCard from '../components/ProductCard.jsx'
+import { useProductStore } from '../../store/product.js'
+import { useEffect } from 'react'
 
 const HomePage = () => {
-  
+  const { fetchProducts, products } = useProductStore();
+
+  // runs once component first mounts. also runs when fetchProducts changes
+	useEffect(() => {
+		fetchProducts();
+	}, [fetchProducts]); //effect will only run again if fetchProducts changes ie. new data added
+
+  // Log the products or specific image URL when products change ie. fetchProducts has finished executing
+  useEffect(() => {
+    console.log("products", products); // Log all products
+    if (products.length > 1) {
+      console.log("url", products[6].image); // Log the image of the second product if it exists
+    }
+  }, [products]); 
+
+
   return (
     <Container maxW={'container.x1'} py={12}>
       <VStack spacing={8}>
@@ -26,7 +43,9 @@ const HomePage = () => {
           spacing={10}
           w = "full"
         >
-					
+					{products.map((product) => (
+						<ProductCard key={product._id} product={product} />
+					))}
         </SimpleGrid>
 
         <Text fontSize='xl' textAlign={"center"} fontWeight='bold' color='gray.500'>

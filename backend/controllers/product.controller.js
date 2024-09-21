@@ -1,5 +1,6 @@
 import Product from "../models/product.model.js";
 import mongoose from "mongoose";
+import axios from 'axios'
 
 export const getProducts = async (req, res) => {
   try {
@@ -9,6 +10,26 @@ export const getProducts = async (req, res) => {
     res.status(500).json({ success: false, message: "server Error" });
   }
 };
+
+export const getUrlImage = async(req,res) => {
+  try {
+    const fetchImagePromises = req.body.images.map(async (image) => {
+      const response = await axios.get(image, {
+        responseType: 'arraybuffer',
+      });
+      const imageBuffer = Buffer.from(response.data, 'binary');
+      const base64Image = imageBuffer.toString('base64');
+      const imageType = response.headers['content-type'];
+      return `data:${imageType};base64,${base64Image}`;
+    });
+
+    const images = await Promise.all(fetchImagePromises);
+    res.json({ images });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: 'Error fetching images' });
+  }
+}
 
 export const createProduct = async (req, res) => {
   const product = req.body; // user will send a post request and the info would be in the body

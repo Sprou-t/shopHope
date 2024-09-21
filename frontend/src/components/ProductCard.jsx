@@ -8,8 +8,8 @@ import {
   useColorModeValue,
   Text
 } from "@chakra-ui/react";
-import { EditIcon, DeleteIcon } from "@chakra-ui/icons";
-
+import { FaRegEdit } from "react-icons/fa";
+import { MdOutlineDelete } from "react-icons/md";
 
 export default function ProductCard({product}) {
   //first val is color used when user in light mode, second when user in dark mode. val larger means darker
@@ -40,8 +40,8 @@ export default function ProductCard({product}) {
         </Text>
 
         <HStack spacing={2}>
-          <IconButton icon={<EditIcon />} colorScheme="blue" />
-          <IconButton icon={<DeleteIcon />} colorScheme="red" />
+          <IconButton icon={<FaRegEdit />} colorScheme="blue" />
+          <IconButton icon={<MdOutlineDelete />} colorScheme="red" />
         </HStack>
       </Box>
     </Box>
