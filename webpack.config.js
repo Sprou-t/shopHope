@@ -2,6 +2,7 @@ import path from "path"; // Use ES6 import
 import HtmlWebpackPlugin from "html-webpack-plugin"; // Use ES6 import
 import webpack from "webpack"; // Use ES6 import
 import dotenv from "dotenv";
+import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer";
 
 // Load environment variables from .env file
 dotenv.config();
@@ -33,6 +34,11 @@ const config = (env, argv) => {
       historyApiFallback: true,
     },
     devtool: "source-map", // Source maps for debugging
+    performance: {
+      maxAssetSize: 1500000, // Set the maximum allowed file size in bytes (e.g., 500kB)
+      maxEntrypointSize: 1500000, // Set the maximum allowed entry point size (in bytes)
+      hints: 'warning', // Use 'error' to throw an error, or 'warning' to just show a warning
+    },
     module: {
       rules: [
         {
@@ -67,6 +73,7 @@ const config = (env, argv) => {
       new webpack.DefinePlugin({
         BACKEND_URL: JSON.stringify(backend_url), // Global constant for backend URL
       }),
+      new BundleAnalyzerPlugin()
     ],
   };
 };
