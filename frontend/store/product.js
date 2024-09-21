@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { updateProduct } from "../../backend/controllers/product.controller.js";
 
 // create a state management store that can set the state, send POST req to create new data
 // set is a function provided by zustand to update the state of the store.
@@ -68,4 +69,22 @@ export const useProductStore = create((set) => ({
     // the function, can access the val eg. result= await deleteProducts("product_id");
     // if (result.succes)
   },
+  updateProduct: async (pid, updatedProduct) => {
+		const res = await fetch(`http://localhost:5000/products/${pid}`, {
+			method: "PUT",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify(updatedProduct),
+		});
+		const data = await res.json();
+		if (!data.success) return { success: false, message: data.message };
+
+		// update the ui immediately, without needing a refresh
+		set((state) => ({
+			products: state.products.map((product) => (product._id === pid ? data.data : product)),
+		}));
+
+		return { success: true, message: data.message };
+	},
 }));
