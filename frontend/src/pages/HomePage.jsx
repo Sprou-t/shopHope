@@ -1,66 +1,72 @@
-import { Container, VStack, Text, SimpleGrid,Image } from '@chakra-ui/react'
-import { Link } from 'react-router-dom'
-import React from 'react'
-import ProductCard from '../components/ProductCard.jsx'
-import { useProductStore } from '../../store/product.js'
-import { useEffect } from 'react'
+import { Container, VStack, Text, SimpleGrid, Image } from "@chakra-ui/react";
+import { Link } from "react-router-dom";
+import React from "react";
+import ProductCard from "../components/ProductCard.jsx";
+import { useProductStore } from "../../store/product.js";
+import { useEffect } from "react";
 
 const HomePage = () => {
   const { fetchProducts, products } = useProductStore();
 
   // runs once component first mounts. also runs when fetchProducts changes
-	useEffect(() => {
-		fetchProducts();
-	}, [fetchProducts]); //effect will only run again if fetchProducts changes ie. new data added
+  useEffect(() => {
+    fetchProducts();
+  }, [fetchProducts]); //effect will only run again if fetchProducts changes ie. new data added
 
   // Log the products or specific image URL when products change ie. fetchProducts has finished executing
   useEffect(() => {
     console.log("products", products); // Log all products
-    if (products.length > 1) {
-      console.log("url", products[6].image); // Log the image of the second product if it exists
-    }
-  }, [products]); 
-
+  }, [products]);
 
   return (
-    <Container maxW={'container.x1'} py={12}>
+    <Container maxW={"container.x1"} py={12}>
       <VStack spacing={8}>
         <Text
-          fontSize = {"30"}
-          fontWeight = {"bold"}
+          fontSize={"30"}
+          fontWeight={"bold"}
           bgGradient={"linear(to-r, cyan.400, blue.500)"}
-          bgClip = {"text"}
-          textAlign = {"center"}
-          >
-            Current Products
+          bgClip={"text"}
+          textAlign={"center"}
+        >
+          Current Products
         </Text>
 
-        <SimpleGrid columns = {{
-          base:1,
-          md: 2,
-          lg:3
-        }}
+        <SimpleGrid
+          columns={{
+            base: 1,
+            md: 2,
+            lg: 3,
+          }}
           spacing={10}
-          w = "full"
+          w="full"
         >
-					{products.map((product) => (
-						<ProductCard key={product._id} product={product} />
-					))}
+          {products.map((product) => (
+            <ProductCard key={product._id} product={product} />
+          ))}
         </SimpleGrid>
 
-        <Text fontSize='xl' textAlign={"center"} fontWeight='bold' color='gray.500'>
-						No products found 😢{" "}
-						<Link to={"/create"}>
-							<Text as='span' color='blue.500' _hover={{ textDecoration: "underline" }}>
-								Create a product
-							</Text>
-						</Link>
-					</Text>
-
+        {products.length == 0 && (
+          <Text
+            fontSize="xl"
+            textAlign={"center"}
+            fontWeight="bold"
+            color="gray.500"
+          >
+            No products found 😢{" "}
+            <Link to={"/create"}>
+              <Text
+                as="span"
+                color="blue.500"
+                _hover={{ textDecoration: "underline" }}
+              >
+                Create a product
+              </Text>
+            </Link>
+          </Text>
+        )}
       </VStack>
-
     </Container>
-  )
-}
+  );
+};
 
-export default HomePage
+export default HomePage;
