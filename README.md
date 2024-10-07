@@ -1,10 +1,9 @@
-# React-webpack template 
+# ShopHope 
 
 
 ## Description
--configured a webpack template for react with a json server to simulate backend
--Remember to need to change the production url when deploying app
+-an app that saves a wishlist of items to purchase in the future
 
 ### how to start in development server
--npm i
--npm run dev
+1. npm i
+2. npm run dev
