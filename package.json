@@ -5,6 +5,7 @@
   "main": "webpack.config.js",
   "scripts": {
     "build": "webpack --mode=production",
+    "heroku-postbuild": "npm install && npm run build", 
     "start": "node backend/server.js",
     "server": "json-server --watch db.json --port 3001",
     "dev": "concurrently \"webpack serve --mode=development\" \"nodemon backend/server.js\"",
